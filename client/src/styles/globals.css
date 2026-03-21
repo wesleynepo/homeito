@@ -1,0 +1,48 @@
+:root {
+  --bg: #0a0a0f;
+  --primary: #ff6b35;
+  --secondary: #2d1b4e;
+  --accent: #00d4aa;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --card-bg: #1a1a2e;
+  --card-border: #3d3d5c;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --success: #4ade80;
+
+  --font-display: 'Bebas Neue', cursive;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+input {
+  font-family: var(--font-body);
+}
