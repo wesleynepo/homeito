@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { gameReducer, GameState } from '../context/GameContext'
+import type { GameState } from '../context/GameContext';
+import { gameReducer } from '../context/GameContext'
 import type { Room } from '@ito/shared'
 
 function makeRoom(overrides: Partial<Room> = {}): Room {

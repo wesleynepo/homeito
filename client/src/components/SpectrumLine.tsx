@@ -1,5 +1,5 @@
 import React from 'react'
-import { Player } from '@ito/shared'
+import type { Player } from '@ito/shared'
 import { positionToPercent } from '@ito/shared'
 import styles from './SpectrumLine.module.css'
 

@@ -1,5 +1,5 @@
-import { Server, Socket } from 'socket.io'
-import { ClientToServerEvents, ServerToClientEvents, Room } from '@ito/shared'
+import type { Server, Socket } from 'socket.io'
+import type { ClientToServerEvents, ServerToClientEvents, Room } from '@ito/shared'
 import {
   createRoom,
   joinRoom,

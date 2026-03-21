@@ -6,8 +6,9 @@ import React, {
   useRef,
   useCallback,
 } from 'react'
-import { io, Socket } from 'socket.io-client'
-import {
+import type { Socket } from 'socket.io-client';
+import { io } from 'socket.io-client'
+import type {
   Room,
   Player,
   Question,

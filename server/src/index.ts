@@ -4,7 +4,7 @@ import { Server } from 'socket.io'
 import os from 'os'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { ClientToServerEvents, ServerToClientEvents } from '@ito/shared'
+import type { ClientToServerEvents, ServerToClientEvents } from '@ito/shared'
 import { registerHandlers } from './handlers.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { assignCards, detectMistakes, migrateHost } from '@ito/shared'
-import { Player } from '@ito/shared'
+import type { Player } from '@ito/shared'
 
 // Helper to make players
 function makePlayer(overrides: Partial<Player> = {}): Player {
