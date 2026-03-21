@@ -88,7 +88,7 @@ export default function SpectatorView() {
 
           {room.currentQuestion && (
             <div className={styles.theme}>
-              <p className={styles.themeText}>{room.currentQuestion.theme}</p>
+              <p className={styles.themeText}>{t(`questions.${room.currentQuestion.id}.theme`, { defaultValue: room.currentQuestion.theme })}</p>
             </div>
           )}
 

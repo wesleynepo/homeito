@@ -92,5 +92,27 @@
     "mistake_other": "{{count}} erros",
     "won": "🎉 Vocês venceram!",
     "game_over": "💀 Fim de Jogo"
+  },
+  "questions": {
+    "q1":  { "theme": "Quão rápido é?",                    "examples": "preguiça dormindo = 1 · raio = 100" },
+    "q2":  { "theme": "Quão grande é?",                    "examples": "grão de areia = 1 · universo observável = 100" },
+    "q3":  { "theme": "Quão quente é?",                    "examples": "tundra ártica = 1 · lava vulcânica = 100" },
+    "q4":  { "theme": "Quão antigo é? (não pessoas)",      "examples": "pão recém-assado = 1 · pirâmides do Egito = 100" },
+    "q5":  { "theme": "Quão alto é o som?",                "examples": "floco de neve caindo = 1 · trovão = 100" },
+    "q6":  { "theme": "Quão doce é?",                      "examples": "café puro = 1 · xarope de bordo = 100" },
+    "q7":  { "theme": "Quão raro é?",                      "examples": "água da torneira = 1 · dodo vivo = 100" },
+    "q8":  { "theme": "Quão longe da Terra está?",         "examples": "a estratosfera = 1 · um quasar distante = 100" },
+    "q9":  { "theme": "Quão perigoso é?",                  "examples": "plástico bolha = 1 · supervulcão = 100" },
+    "q10": { "theme": "Quão famoso é?",                    "examples": "seu animal de infância = 1 · a lua = 100" },
+    "q11": { "theme": "Quão caro é?",                      "examples": "um grão de sal = 1 · uma ilha privada = 100" },
+    "q12": { "theme": "Quão picante é?",                   "examples": "arroz branco simples = 1 · capsaicina pura = 100" },
+    "q13": { "theme": "Quão alto é?",                      "examples": "um cogumelo = 1 · a atmosfera = 100" },
+    "q14": { "theme": "Quão pesado é?",                    "examples": "uma bolha de sabão = 1 · um iceberg = 100" },
+    "q15": { "theme": "Quão inteligente é este animal?",   "examples": "esponja do mar = 1 · golfinho = 100" },
+    "q16": { "theme": "Quão flexível é?",                  "examples": "uma parede de tijolo = 1 · espaguete cozido = 100" },
+    "q17": { "theme": "Quão profundo é?",                  "examples": "uma poça de lama = 1 · fossa oceânica = 100" },
+    "q18": { "theme": "Quão brilhante é?",                 "examples": "noite sem lua = 1 · arco de solda = 100" },
+    "q19": { "theme": "Quão macio é?",                     "examples": "granito sólido = 1 · marshmallow fresco = 100" },
+    "q20": { "theme": "Quão rápido muda?",                 "examples": "o fundo do oceano = 1 · um meme viral = 100" }
   }
 }

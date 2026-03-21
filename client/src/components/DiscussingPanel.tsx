@@ -38,10 +38,8 @@ export function DiscussingPanel() {
 
       <div className={styles.theme}>
         <p className={styles.themeLabel}>{t('discussing.round', { current: room.currentRound, total: room.totalRounds })}</p>
-        <p className={styles.themeText}>{question.theme}</p>
-        {question.examples.length > 0 && (
-          <p className={styles.examples}>{question.examples.join(' · ')}</p>
-        )}
+        <p className={styles.themeText}>{t(`questions.${question.id}.theme`, { defaultValue: question.theme })}</p>
+        <p className={styles.examples}>{t(`questions.${question.id}.examples`, { defaultValue: question.examples.join(' · ') })}</p>
       </div>
 
       <div className={styles.cardSection}>
