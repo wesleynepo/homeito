@@ -1,4 +1,4 @@
-import type { Player } from './types.js'
+import type { Player } from './types'
 
 /**
  * Assigns card values to N players using band partitioning.

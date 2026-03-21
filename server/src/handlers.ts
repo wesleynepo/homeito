@@ -15,7 +15,7 @@ import {
   getRoom,
   getRoomBySocketId,
   sanitizeRoom,
-} from './room.js'
+} from './room'
 
 type IOServer = Server<ClientToServerEvents, ServerToClientEvents>
 type GameSocket = Socket<ClientToServerEvents, ServerToClientEvents>
