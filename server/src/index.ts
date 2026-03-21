@@ -5,7 +5,7 @@ import os from 'os'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import type { ClientToServerEvents, ServerToClientEvents } from '@ito/shared'
-import { registerHandlers } from './handlers.js'
+import { registerHandlers } from './handlers'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -35,11 +35,13 @@ app.get('/api/local-ip', (_req, res) => {
 })
 
 // Serve client build in production
-const clientDist = path.resolve(__dirname, '../../client/dist')
-app.use(express.static(clientDist))
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(clientDist, 'index.html'))
-})
+if (process.env.NODE_ENV === 'production') {
+  const clientDist = path.resolve(__dirname, '../../client/dist')
+  app.use(express.static(clientDist))
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(clientDist, 'index.html'))
+  })
+}
 
 io.on('connection', (socket) => {
   registerHandlers(io, socket)

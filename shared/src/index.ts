@@ -1,3 +1,3 @@
-export * from './types.js'
-export * from './game.js'
-export * from './questions.js'
+export * from './types'
+export * from './game'
+export * from './questions'

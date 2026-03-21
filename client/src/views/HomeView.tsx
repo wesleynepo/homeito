@@ -7,7 +7,7 @@ export default function HomeView() {
   const { createRoom, joinRoom, state } = useGame()
   const navigate = useNavigate()
 
-  const [mode, setMode] = useState<'create' | 'join'>('create')
+  const [mode, setMode] = useState<'create' | 'join' | 'watch'>('create')
   const [nickname, setNickname] = useState('')
   const [roomCode, setRoomCode] = useState('')
   const [rounds, setRounds] = useState(13)
@@ -49,13 +49,19 @@ export default function HomeView() {
         >
           Join Room
         </button>
+        <button
+          className={mode === 'watch' ? styles.activeTab : styles.tab}
+          onClick={() => setMode('watch')}
+        >
+          Watch
+        </button>
       </div>
 
       {state.error && (
         <div className={styles.error}>{state.error.message}</div>
       )}
 
-      {mode === 'create' ? (
+      {mode === 'create' && (
         <form onSubmit={handleCreate} className={styles.form}>
           <label className={styles.label}>
             Your nickname
@@ -97,7 +103,9 @@ export default function HomeView() {
             Create Room
           </button>
         </form>
-      ) : (
+      )}
+
+      {mode === 'join' && (
         <form onSubmit={handleJoin} className={styles.form}>
           <label className={styles.label}>
             Room code
@@ -128,6 +136,35 @@ export default function HomeView() {
             disabled={!nickname.trim() || roomCode.length !== 4}
           >
             Join Room
+          </button>
+        </form>
+      )}
+
+      {mode === 'watch' && (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (roomCode.length === 4) navigate(`/spectator/${roomCode.trim().toUpperCase()}`)
+          }}
+          className={styles.form}
+        >
+          <label className={styles.label}>
+            Room code
+            <input
+              className={styles.input}
+              value={roomCode}
+              onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
+              maxLength={4}
+              placeholder="XXXX"
+              autoFocus
+            />
+          </label>
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={roomCode.length !== 4}
+          >
+            Watch on TV
           </button>
         </form>
       )}
