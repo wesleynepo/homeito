@@ -1,0 +1,96 @@
+{
+  "common": {
+    "connecting": "Conectando…",
+    "connecting_room": "Conectando à sala {{code}}…",
+    "loading": "Carregando..."
+  },
+  "home": {
+    "tab_create": "Criar Sala",
+    "tab_join": "Entrar na Sala",
+    "tab_watch": "Assistir",
+    "nickname_label": "Seu apelido",
+    "nickname_placeholder": "Digite seu apelido",
+    "rounds_label": "Rodadas: {{count}}",
+    "lives_label": "Vidas: {{count}}",
+    "btn_create": "Criar Sala",
+    "room_code_label": "Código da sala",
+    "btn_join": "Entrar na Sala",
+    "btn_watch": "Assistir na TV"
+  },
+  "lobby": {
+    "room": "SALA: {{code}}",
+    "players": "Jogadores ({{count}}/8)",
+    "you": " (você)",
+    "rounds_label": "Rodadas: {{count}}",
+    "lives_label": "Vidas:",
+    "btn_start": "Iniciar Jogo →",
+    "need_players_one": "Falta {{count}} jogador",
+    "need_players_other": "Faltam {{count}} jogadores",
+    "waiting": "Aguardando o host iniciar…"
+  },
+  "discussing": {
+    "round": "Rodada {{current}}/{{total}}",
+    "your_card": "Sua carta:",
+    "hide_card": "Esconder carta",
+    "tap_to_reveal": "Toque para revelar",
+    "tap_hint": "TOQUE",
+    "your_position": "Sua posição (1–{{n}}):",
+    "unlock": "Desbloquear Posição",
+    "lock_in": "Confirmar ✓",
+    "locked": "Confirmados: {{players}}",
+    "waiting": "Aguardando: {{players}}",
+    "reveal": "Revelar →",
+    "force_reveal": "Forçar Revelação"
+  },
+  "reveal": {
+    "revealing": "Revelando…",
+    "all_good": "✅ Tudo em ordem! Nenhuma vida perdida.",
+    "mistake_one": "{{count}} erro",
+    "mistake_other": "{{count}} erros",
+    "life_lost_one": "{{count}} vida perdida",
+    "life_lost_other": "{{count}} vidas perdidas",
+    "waiting_host": "Aguardando o host revelar…",
+    "host_note": "[aguardando o host]"
+  },
+  "round_result": {
+    "round": "Rodada {{current}}/{{total}}",
+    "perfect": "✅ Rodada perfeita!",
+    "mistake_one": "{{count}} erro",
+    "mistake_other": "{{count}} erros",
+    "next_round": "Próxima Rodada →"
+  },
+  "game_over": {
+    "title": "FIM DE JOGO",
+    "won": "🎉 Vocês venceram!",
+    "lost": "💀 Vocês perderam…",
+    "rounds": "Rodadas: {{played}}/{{total}}",
+    "lives_left": "Vidas restantes:",
+    "play_again": "Jogar Novamente",
+    "leave": "Sair da Sala"
+  },
+  "paused": {
+    "title": "Jogo Pausado",
+    "message_before": "Aguardando",
+    "message_after": "reconectar…",
+    "kick": "Remover Jogador e Continuar"
+  },
+  "spectrum": {
+    "lowest": "MENOR",
+    "highest": "MAIOR"
+  },
+  "lives": {
+    "aria": "{{lives}} de {{max}} vidas restantes"
+  },
+  "spectator": {
+    "players": "Jogadores ({{count}}/8)",
+    "host_suffix": " (host)",
+    "waiting": "Aguardando o host iniciar…",
+    "room": "SALA: {{code}}",
+    "round": "RODADA: {{current}}/{{total}}",
+    "all_good": "✅ Tudo em ordem!",
+    "mistake_one": "{{count}} erro",
+    "mistake_other": "{{count}} erros",
+    "won": "🎉 Vocês venceram!",
+    "game_over": "💀 Fim de Jogo"
+  }
+}

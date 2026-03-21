@@ -1,10 +1,12 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { LivesDisplay } from './LivesDisplay'
 import styles from './RoundResultPanel.module.css'
 
 export function RoundResultPanel() {
   const { state, isHost, nextRound } = useGame()
+  const { t } = useTranslation()
   const room = state.room!
   const result = state.lastRevealResult
 
@@ -15,15 +17,15 @@ export function RoundResultPanel() {
         <LivesDisplay lives={room.lives} maxLives={room.maxLives} />
       </div>
 
-      <p className={styles.roundLabel}>Round {room.currentRound}/{room.totalRounds}</p>
+      <p className={styles.roundLabel}>{t('round_result.round', { current: room.currentRound, total: room.totalRounds })}</p>
 
       {result && (
         <div className={styles.summary}>
           {result.mistakes === 0 ? (
-            <p className={styles.success}>✅ Perfect round!</p>
+            <p className={styles.success}>{t('round_result.perfect')}</p>
           ) : (
             <p className={styles.mistakes}>
-              {result.mistakes} mistake{result.mistakes !== 1 ? 's' : ''} · -{result.livesLost} ❤️
+              {t('round_result.mistake', { count: result.mistakes })} · -{result.livesLost} ❤️
             </p>
           )}
 
@@ -44,7 +46,7 @@ export function RoundResultPanel() {
 
       {isHost && (
         <button onClick={nextRound} className={styles.nextButton}>
-          Next Round →
+          {t('round_result.next_round')}
         </button>
       )}
     </div>

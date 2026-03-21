@@ -1,0 +1,96 @@
+{
+  "common": {
+    "connecting": "Connecting…",
+    "connecting_room": "Connecting to room {{code}}…",
+    "loading": "Loading..."
+  },
+  "home": {
+    "tab_create": "Create Room",
+    "tab_join": "Join Room",
+    "tab_watch": "Watch",
+    "nickname_label": "Your nickname",
+    "nickname_placeholder": "Enter nickname",
+    "rounds_label": "Rounds: {{count}}",
+    "lives_label": "Lives: {{count}}",
+    "btn_create": "Create Room",
+    "room_code_label": "Room code",
+    "btn_join": "Join Room",
+    "btn_watch": "Watch on TV"
+  },
+  "lobby": {
+    "room": "ROOM: {{code}}",
+    "players": "Players ({{count}}/8)",
+    "you": " (you)",
+    "rounds_label": "Rounds: {{count}}",
+    "lives_label": "Lives:",
+    "btn_start": "Start Game →",
+    "need_players_one": "Need {{count}} more player",
+    "need_players_other": "Need {{count}} more players",
+    "waiting": "Waiting for host to start…"
+  },
+  "discussing": {
+    "round": "Round {{current}}/{{total}}",
+    "your_card": "Your card:",
+    "hide_card": "Hide card",
+    "tap_to_reveal": "Tap to reveal",
+    "tap_hint": "TAP",
+    "your_position": "Your position (1–{{n}}):",
+    "unlock": "Unlock Position",
+    "lock_in": "Lock In ✓",
+    "locked": "Locked: {{players}}",
+    "waiting": "Waiting: {{players}}",
+    "reveal": "Reveal →",
+    "force_reveal": "Force Reveal"
+  },
+  "reveal": {
+    "revealing": "Revealing…",
+    "all_good": "✅ All in order! No lives lost.",
+    "mistake_one": "{{count}} mistake",
+    "mistake_other": "{{count}} mistakes",
+    "life_lost_one": "{{count}} life lost",
+    "life_lost_other": "{{count}} lives lost",
+    "waiting_host": "Waiting for host to reveal…",
+    "host_note": "[waiting for host]"
+  },
+  "round_result": {
+    "round": "Round {{current}}/{{total}}",
+    "perfect": "✅ Perfect round!",
+    "mistake_one": "{{count}} mistake",
+    "mistake_other": "{{count}} mistakes",
+    "next_round": "Next Round →"
+  },
+  "game_over": {
+    "title": "GAME OVER",
+    "won": "🎉 You won!",
+    "lost": "💀 You lost…",
+    "rounds": "Rounds: {{played}}/{{total}}",
+    "lives_left": "Lives left:",
+    "play_again": "Play Again",
+    "leave": "Leave Room"
+  },
+  "paused": {
+    "title": "Game Paused",
+    "message_before": "Waiting for",
+    "message_after": "to reconnect…",
+    "kick": "Remove Player & Resume"
+  },
+  "spectrum": {
+    "lowest": "LOWEST",
+    "highest": "HIGHEST"
+  },
+  "lives": {
+    "aria": "{{lives}} of {{max}} lives remaining"
+  },
+  "spectator": {
+    "players": "Players ({{count}}/8)",
+    "host_suffix": " (host)",
+    "waiting": "Waiting for host to start…",
+    "room": "ROOM: {{code}}",
+    "round": "ROUND: {{current}}/{{total}}",
+    "all_good": "✅ All in order!",
+    "mistake_one": "{{count}} mistake",
+    "mistake_other": "{{count}} mistakes",
+    "won": "🎉 You won!",
+    "game_over": "💀 Game Over"
+  }
+}

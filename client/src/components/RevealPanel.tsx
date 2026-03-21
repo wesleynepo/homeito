@@ -1,16 +1,18 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import styles from './RevealPanel.module.css'
 
 export function RevealPanel() {
   const { state } = useGame()
+  const { t } = useTranslation()
   const result = state.lastRevealResult
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <span className={styles.logo}>ITO</span>
-        <span className={styles.label}>Revealing…</span>
+        <span className={styles.label}>{t('reveal.revealing')}</span>
       </div>
 
       {result ? (
@@ -30,18 +32,18 @@ export function RevealPanel() {
           </div>
 
           {result.mistakes === 0 ? (
-            <p className={styles.success}>✅ All in order! No lives lost.</p>
+            <p className={styles.success}>{t('reveal.all_good')}</p>
           ) : (
             <p className={styles.lost}>
-              {result.mistakes} mistake{result.mistakes !== 1 ? 's' : ''} · {result.livesLost} life{result.livesLost !== 1 ? 's' : ''} lost
+              {t('reveal.mistake', { count: result.mistakes })} · {t('reveal.life_lost', { count: result.livesLost })}
             </p>
           )}
         </div>
       ) : (
-        <p className={styles.waiting}>Waiting for host to reveal…</p>
+        <p className={styles.waiting}>{t('reveal.waiting_host')}</p>
       )}
 
-      <p className={styles.hostWait}>[waiting for host]</p>
+      <p className={styles.hostWait}>{t('reveal.host_note')}</p>
     </div>
   )
 }

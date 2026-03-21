@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import styles from './HomeView.module.css'
 
 export default function HomeView() {
   const { createRoom, joinRoom, state } = useGame()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const [mode, setMode] = useState<'create' | 'join' | 'watch'>('create')
@@ -35,25 +38,26 @@ export default function HomeView() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>ITO</h1>
+      <LanguageSwitcher />
 
       <div className={styles.tabs}>
         <button
           className={mode === 'create' ? styles.activeTab : styles.tab}
           onClick={() => setMode('create')}
         >
-          Create Room
+          {t('home.tab_create')}
         </button>
         <button
           className={mode === 'join' ? styles.activeTab : styles.tab}
           onClick={() => setMode('join')}
         >
-          Join Room
+          {t('home.tab_join')}
         </button>
         <button
           className={mode === 'watch' ? styles.activeTab : styles.tab}
           onClick={() => setMode('watch')}
         >
-          Watch
+          {t('home.tab_watch')}
         </button>
       </div>
 
@@ -64,19 +68,19 @@ export default function HomeView() {
       {mode === 'create' && (
         <form onSubmit={handleCreate} className={styles.form}>
           <label className={styles.label}>
-            Your nickname
+            {t('home.nickname_label')}
             <input
               className={styles.input}
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               maxLength={20}
-              placeholder="Enter nickname"
+              placeholder={t('home.nickname_placeholder')}
               autoFocus
             />
           </label>
 
           <label className={styles.label}>
-            Rounds: {rounds}
+            {t('home.rounds_label', { count: rounds })}
             <input
               type="range"
               min={5}
@@ -88,7 +92,7 @@ export default function HomeView() {
           </label>
 
           <label className={styles.label}>
-            Lives: {lives}
+            {t('home.lives_label', { count: lives })}
             <input
               type="range"
               min={1}
@@ -100,7 +104,7 @@ export default function HomeView() {
           </label>
 
           <button type="submit" className={styles.button} disabled={!nickname.trim()}>
-            Create Room
+            {t('home.btn_create')}
           </button>
         </form>
       )}
@@ -108,7 +112,7 @@ export default function HomeView() {
       {mode === 'join' && (
         <form onSubmit={handleJoin} className={styles.form}>
           <label className={styles.label}>
-            Room code
+            {t('home.room_code_label')}
             <input
               className={styles.input}
               value={roomCode}
@@ -120,13 +124,13 @@ export default function HomeView() {
           </label>
 
           <label className={styles.label}>
-            Your nickname
+            {t('home.nickname_label')}
             <input
               className={styles.input}
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               maxLength={20}
-              placeholder="Enter nickname"
+              placeholder={t('home.nickname_placeholder')}
             />
           </label>
 
@@ -135,7 +139,7 @@ export default function HomeView() {
             className={styles.button}
             disabled={!nickname.trim() || roomCode.length !== 4}
           >
-            Join Room
+            {t('home.btn_join')}
           </button>
         </form>
       )}
@@ -149,7 +153,7 @@ export default function HomeView() {
           className={styles.form}
         >
           <label className={styles.label}>
-            Room code
+            {t('home.room_code_label')}
             <input
               className={styles.input}
               value={roomCode}
@@ -164,7 +168,7 @@ export default function HomeView() {
             className={styles.button}
             disabled={roomCode.length !== 4}
           >
-            Watch on TV
+            {t('home.btn_watch')}
           </button>
         </form>
       )}
