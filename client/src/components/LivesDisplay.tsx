@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from './LivesDisplay.module.css'
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 }
 
 export function LivesDisplay({ lives, maxLives }: Props) {
+  const { t } = useTranslation()
   const [prevLives, setPrevLives] = useState(lives)
 
   useEffect(() => {
@@ -14,7 +16,7 @@ export function LivesDisplay({ lives, maxLives }: Props) {
   }, [lives])
 
   return (
-    <div className={styles.container} aria-label={`${lives} of ${maxLives} lives remaining`}>
+    <div className={styles.container} aria-label={t('lives.aria', { lives, max: maxLives })}>
       {Array.from({ length: maxLives }, (_, i) => {
         const isLost = i >= lives
         const justLost = i >= lives && i < prevLives

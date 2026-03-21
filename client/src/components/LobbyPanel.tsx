@@ -1,24 +1,27 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { LivesDisplay } from './LivesDisplay'
 import styles from './LobbyPanel.module.css'
 
 export function LobbyPanel() {
   const { state, myPlayer, isHost, startGame } = useGame()
+  const { t } = useTranslation()
   const room = state.room!
 
-  const canStart = room.players.filter((p) => p.isConnected).length >= 3
+  const connectedCount = room.players.filter((p) => p.isConnected).length
+  const canStart = connectedCount >= 3
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <span className={styles.logo}>ITO</span>
-        <span className={styles.roomCode}>ROOM: {room.code}</span>
+        <span className={styles.roomCode}>{t('lobby.room', { code: room.code })}</span>
       </div>
 
       <div className={styles.playerList}>
         <p className={styles.sectionLabel}>
-          Players ({room.players.length}/8)
+          {t('lobby.players', { count: room.players.length })}
         </p>
         {room.players.map((p) => (
           <div key={p.id} className={styles.player}>
@@ -27,7 +30,7 @@ export function LobbyPanel() {
             />
             <span>
               {p.nickname}
-              {p.id === myPlayer?.id && ' (you)'}
+              {p.id === myPlayer?.id && t('lobby.you')}
               {p.isHost && ' 👑'}
             </span>
           </div>
@@ -37,7 +40,7 @@ export function LobbyPanel() {
       {isHost ? (
         <div className={styles.config}>
           <label className={styles.label}>
-            Rounds: {room.totalRounds}
+            {t('lobby.rounds_label', { count: room.totalRounds })}
             <input
               type="range"
               min={5}
@@ -48,14 +51,16 @@ export function LobbyPanel() {
             />
           </label>
           <label className={styles.label}>
-            Lives: <LivesDisplay lives={room.maxLives} maxLives={room.maxLives} />
+            {t('lobby.lives_label')} <LivesDisplay lives={room.maxLives} maxLives={room.maxLives} />
           </label>
           <button
             className={styles.startButton}
             onClick={startGame}
             disabled={!canStart}
           >
-            {canStart ? 'Start Game →' : `Need ${3 - room.players.length} more players`}
+            {canStart
+              ? t('lobby.btn_start')
+              : t('lobby.need_players', { count: 3 - room.players.length })}
           </button>
         </div>
       ) : (
@@ -63,7 +68,7 @@ export function LobbyPanel() {
           <p className={styles.configDisplay}>
             {room.totalRounds} rounds · <LivesDisplay lives={room.maxLives} maxLives={room.maxLives} />
           </p>
-          <p className={styles.waitText}>Waiting for host to start…</p>
+          <p className={styles.waitText}>{t('lobby.waiting')}</p>
         </div>
       )}
     </div>

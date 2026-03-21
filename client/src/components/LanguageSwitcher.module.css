@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 400;
+}
+
+.btn.active {
+  background: #fff;
+  color: #111;
+  font-weight: 700;
+}

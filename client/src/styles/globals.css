@@ -46,3 +46,7 @@ button {
 input {
   font-family: var(--font-body);
 }
+
+.loading {
+  padding: 24px;
+}

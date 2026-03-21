@@ -1,0 +1,118 @@
+{
+  "common": {
+    "connecting": "Connecting…",
+    "connecting_room": "Connecting to room {{code}}…",
+    "loading": "Loading..."
+  },
+  "home": {
+    "tab_create": "Create Room",
+    "tab_join": "Join Room",
+    "tab_watch": "Watch",
+    "nickname_label": "Your nickname",
+    "nickname_placeholder": "Enter nickname",
+    "rounds_label": "Rounds: {{count}}",
+    "lives_label": "Lives: {{count}}",
+    "btn_create": "Create Room",
+    "room_code_label": "Room code",
+    "btn_join": "Join Room",
+    "btn_watch": "Watch on TV"
+  },
+  "lobby": {
+    "room": "ROOM: {{code}}",
+    "players": "Players ({{count}}/8)",
+    "you": " (you)",
+    "rounds_label": "Rounds: {{count}}",
+    "lives_label": "Lives:",
+    "btn_start": "Start Game →",
+    "need_players_one": "Need {{count}} more player",
+    "need_players_other": "Need {{count}} more players",
+    "waiting": "Waiting for host to start…"
+  },
+  "discussing": {
+    "round": "Round {{current}}/{{total}}",
+    "your_card": "Your card:",
+    "hide_card": "Hide card",
+    "tap_to_reveal": "Tap to reveal",
+    "tap_hint": "TAP",
+    "your_position": "Your position (1–{{n}}):",
+    "unlock": "Unlock Position",
+    "lock_in": "Lock In ✓",
+    "locked": "Locked: {{players}}",
+    "waiting": "Waiting: {{players}}",
+    "reveal": "Reveal →",
+    "force_reveal": "Force Reveal"
+  },
+  "reveal": {
+    "revealing": "Revealing…",
+    "all_good": "✅ All in order! No lives lost.",
+    "mistake_one": "{{count}} mistake",
+    "mistake_other": "{{count}} mistakes",
+    "life_lost_one": "{{count}} life lost",
+    "life_lost_other": "{{count}} lives lost",
+    "waiting_host": "Waiting for host to reveal…",
+    "host_note": "[waiting for host]"
+  },
+  "round_result": {
+    "round": "Round {{current}}/{{total}}",
+    "perfect": "✅ Perfect round!",
+    "mistake_one": "{{count}} mistake",
+    "mistake_other": "{{count}} mistakes",
+    "next_round": "Next Round →"
+  },
+  "game_over": {
+    "title": "GAME OVER",
+    "won": "🎉 You won!",
+    "lost": "💀 You lost…",
+    "rounds": "Rounds: {{played}}/{{total}}",
+    "lives_left": "Lives left:",
+    "play_again": "Play Again",
+    "leave": "Leave Room"
+  },
+  "paused": {
+    "title": "Game Paused",
+    "message_before": "Waiting for",
+    "message_after": "to reconnect…",
+    "kick": "Remove Player & Resume"
+  },
+  "spectrum": {
+    "lowest": "LOWEST",
+    "highest": "HIGHEST"
+  },
+  "lives": {
+    "aria": "{{lives}} of {{max}} lives remaining"
+  },
+  "spectator": {
+    "players": "Players ({{count}}/8)",
+    "host_suffix": " (host)",
+    "waiting": "Waiting for host to start…",
+    "room": "ROOM: {{code}}",
+    "round": "ROUND: {{current}}/{{total}}",
+    "all_good": "✅ All in order!",
+    "mistake_one": "{{count}} mistake",
+    "mistake_other": "{{count}} mistakes",
+    "won": "🎉 You won!",
+    "game_over": "💀 Game Over"
+  },
+  "questions": {
+    "q1":  { "theme": "How fast is it?",               "examples": "sleeping sloth = 1 · lightning bolt = 100" },
+    "q2":  { "theme": "How big is it?",                "examples": "grain of sand = 1 · observable universe = 100" },
+    "q3":  { "theme": "How hot is it?",                "examples": "arctic tundra = 1 · volcanic lava = 100" },
+    "q4":  { "theme": "How old is it? (not people)",   "examples": "freshly baked bread = 1 · Egyptian pyramids = 100" },
+    "q5":  { "theme": "How loud is it?",               "examples": "falling snowflake = 1 · thunderclap = 100" },
+    "q6":  { "theme": "How sweet is it?",              "examples": "black coffee = 1 · maple syrup = 100" },
+    "q7":  { "theme": "How rare is it?",               "examples": "tap water = 1 · living dodo = 100" },
+    "q8":  { "theme": "How far from Earth?",           "examples": "the stratosphere = 1 · a distant quasar = 100" },
+    "q9":  { "theme": "How dangerous is it?",          "examples": "bubble wrap = 1 · supervolcano = 100" },
+    "q10": { "theme": "How well-known is it?",         "examples": "your childhood pet = 1 · the moon = 100" },
+    "q11": { "theme": "How expensive is it?",          "examples": "a grain of salt = 1 · a private island = 100" },
+    "q12": { "theme": "How spicy is it?",              "examples": "plain white rice = 1 · pure capsaicin = 100" },
+    "q13": { "theme": "How tall is it?",               "examples": "a mushroom = 1 · the atmosphere = 100" },
+    "q14": { "theme": "How heavy is it?",              "examples": "a soap bubble = 1 · an iceberg = 100" },
+    "q15": { "theme": "How clever is this animal?",    "examples": "sea sponge = 1 · dolphin = 100" },
+    "q16": { "theme": "How flexible is it?",           "examples": "a brick wall = 1 · cooked spaghetti = 100" },
+    "q17": { "theme": "How deep is it?",               "examples": "a muddy puddle = 1 · deep ocean trench = 100" },
+    "q18": { "theme": "How bright is it?",             "examples": "a moonless night = 1 · a welding arc = 100" },
+    "q19": { "theme": "How soft is it?",               "examples": "solid granite = 1 · fresh marshmallow = 100" },
+    "q20": { "theme": "How fast does it change?",      "examples": "the ocean floor = 1 · a viral meme = 100" }
+  }
+}

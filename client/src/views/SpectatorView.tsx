@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { QRCodePanel } from '../components/QRCodePanel'
 import { SpectrumLine } from '../components/SpectrumLine'
@@ -10,6 +11,7 @@ import styles from './SpectatorView.module.css'
 export default function SpectatorView() {
   const { roomCode } = useParams<{ roomCode: string }>()
   const { state, joinSpectator } = useGame()
+  const { t } = useTranslation()
 
   const [revealedUpToIndex, setRevealedUpToIndex] = useState(-1)
   const revealIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -43,7 +45,7 @@ export default function SpectatorView() {
   }, [state.lastRevealResult])
 
   if (!state.room) {
-    return <div style={{ color: '#fff', padding: 24 }}>Connecting to room {roomCode}…</div>
+    return <div className="loading">{t('common.connecting_room', { code: roomCode })}</div>
   }
 
   const room = state.room
@@ -61,17 +63,17 @@ export default function SpectatorView() {
           <QRCodePanel roomCode={room.code} />
           <div className={styles.playerList}>
             <p className={styles.playerCount}>
-              Players ({room.players.length}/8)
+              {t('spectator.players', { count: room.players.length })}
             </p>
             <div className={styles.players}>
               {room.players.map((p) => (
                 <span key={p.id} className={styles.playerChip}>
-                  {p.isHost ? '✦ ' : ''}{p.nickname}{p.isHost ? ' (host)' : ''}
+                  {p.isHost ? '✦ ' : ''}{p.nickname}{p.isHost ? t('spectator.host_suffix') : ''}
                 </span>
               ))}
             </div>
             <p className={`${styles.waitingText} ${room.players.length >= 3 ? styles.ready : styles.dim}`}>
-              Waiting for host to start…
+              {t('spectator.waiting')}
             </p>
           </div>
         </div>
@@ -79,14 +81,14 @@ export default function SpectatorView() {
         <div className={styles.game}>
           <div className={styles.topBar}>
             <span className={styles.logo}>ITO</span>
-            <span className={styles.roomInfo}>ROOM: {room.code}</span>
-            <span className={styles.roundInfo}>ROUND: {room.currentRound}/{room.totalRounds}</span>
+            <span className={styles.roomInfo}>{t('spectator.room', { code: room.code })}</span>
+            <span className={styles.roundInfo}>{t('spectator.round', { current: room.currentRound, total: room.totalRounds })}</span>
             <LivesDisplay lives={room.lives} maxLives={room.maxLives} />
           </div>
 
           {room.currentQuestion && (
             <div className={styles.theme}>
-              <p className={styles.themeText}>{room.currentQuestion.theme}</p>
+              <p className={styles.themeText}>{t(`questions.${room.currentQuestion.id}.theme`, { defaultValue: room.currentQuestion.theme })}</p>
             </div>
           )}
 
@@ -100,10 +102,10 @@ export default function SpectatorView() {
           {isRevealing && state.lastRevealResult && (
             <div className={styles.revealSummary}>
               {state.lastRevealResult.mistakes === 0 ? (
-                <p className={styles.allGood}>✅ All in order!</p>
+                <p className={styles.allGood}>{t('spectator.all_good')}</p>
               ) : (
                 <p className={styles.mistakes}>
-                  {state.lastRevealResult.mistakes} mistake{state.lastRevealResult.mistakes !== 1 ? 's' : ''}
+                  {t('spectator.mistake', { count: state.lastRevealResult.mistakes })}
                   {' '}· -{state.lastRevealResult.livesLost} ❤️
                 </p>
               )}
@@ -113,7 +115,7 @@ export default function SpectatorView() {
           {room.phase === 'gameOver' && state.gameOverPayload && (
             <div className={styles.gameOver}>
               <p className={styles.gameOverText}>
-                {state.gameOverPayload.won ? '🎉 You won!' : '💀 Game Over'}
+                {state.gameOverPayload.won ? t('spectator.won') : t('spectator.game_over')}
               </p>
             </div>
           )}

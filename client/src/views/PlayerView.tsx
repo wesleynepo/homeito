@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { LobbyPanel } from '../components/LobbyPanel'
 import { DiscussingPanel } from '../components/DiscussingPanel'
@@ -10,6 +11,7 @@ import { PausedOverlay } from '../components/PausedOverlay'
 
 export default function PlayerView() {
   const { state } = useGame()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   // Redirect to home if not in a room
@@ -20,7 +22,7 @@ export default function PlayerView() {
   }, [state.connectionStatus, state.room, navigate])
 
   if (!state.room) {
-    return <div style={{ color: '#fff', padding: 24 }}>Connecting…</div>
+    return <div className="loading">{t('common.connecting')}</div>
   }
 
   const room = state.room

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { GameProvider } from './context/GameContext'
+import './i18n'
 import './styles/globals.css'
 
 // Lazy load views to keep initial bundle small
@@ -13,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <GameProvider>
       <BrowserRouter>
-        <React.Suspense fallback={<div style={{ color: '#fff', padding: 24 }}>Loading...</div>}>
+        <React.Suspense fallback={<div className="loading">Loading...</div>}>
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route path="/player/:roomCode" element={<PlayerView />} />
