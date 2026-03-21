@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import styles from './LanguageSwitcher.module.css'
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation()
@@ -11,34 +12,16 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div style={{ display: 'flex', gap: 4, justifyContent: 'center', marginBottom: 12 }}>
+    <div className={styles.wrapper}>
       <button
         onClick={() => toggle('en')}
-        style={{
-          padding: '4px 10px',
-          borderRadius: 6,
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: 12,
-          background: current === 'en' ? '#fff' : 'rgba(255,255,255,0.15)',
-          color: current === 'en' ? '#111' : '#fff',
-          fontWeight: current === 'en' ? 700 : 400,
-        }}
+        className={`${styles.btn} ${current === 'en' ? styles.active : ''}`}
       >
         EN
       </button>
       <button
         onClick={() => toggle('pt-BR')}
-        style={{
-          padding: '4px 10px',
-          borderRadius: 6,
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: 12,
-          background: current === 'pt-BR' ? '#fff' : 'rgba(255,255,255,0.15)',
-          color: current === 'pt-BR' ? '#111' : '#fff',
-          fontWeight: current === 'pt-BR' ? 700 : 400,
-        }}
+        className={`${styles.btn} ${current === 'pt-BR' ? styles.active : ''}`}
       >
         PT
       </button>

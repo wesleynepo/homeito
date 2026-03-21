@@ -57,12 +57,11 @@ describe('LanguageSwitcher', () => {
     expect(localStorage.getItem('ito-lang')).toBe('en')
   })
 
-  it('active language button has a distinct background', () => {
+  it('active button has the active class, inactive button does not', () => {
     renderSwitcher()
     const enBtn = screen.getByRole('button', { name: 'EN' })
     const ptBtn = screen.getByRole('button', { name: 'PT' })
-    // Active button has white background; inactive is semi-transparent
-    expect(enBtn.style.background).toBe('rgb(255, 255, 255)')
-    expect(ptBtn.style.background).not.toBe('rgb(255, 255, 255)')
+    expect(enBtn.className).toContain('active')
+    expect(ptBtn.className).not.toContain('active')
   })
 })
