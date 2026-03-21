@@ -8,5 +8,6 @@
       "@ito/shared/*": ["../shared/src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "references": [{ "path": "../shared" }]
 }
