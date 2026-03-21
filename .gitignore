@@ -25,3 +25,6 @@ npm-debug.log*
 
 # Vite
 *.local
+
+# TypeScript build info
+*.tsbuildinfo
