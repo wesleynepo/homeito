@@ -4,6 +4,8 @@ node_modules/
 # Build outputs
 dist/
 build/
+**/__tests__/*.js
+**/src/__tests__/*.js
 
 # Environment variables
 .env
