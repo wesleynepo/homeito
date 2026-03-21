@@ -2,6 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { LivesDisplay } from './LivesDisplay'
+import { ItoWaves } from './ItoWaves'
 import styles from './DiscussingPanel.module.css'
 
 export function DiscussingPanel() {
@@ -48,11 +49,13 @@ export function DiscussingPanel() {
           className={`${styles.card} ${state.isCardRevealed ? styles.revealed : ''}`}
           onClick={toggleCard}
           aria-label={state.isCardRevealed ? t('discussing.hide_card') : t('discussing.tap_to_reveal')}
+          // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-player color theming
+          style={{ '--player-color': myPlayer?.color } as React.CSSProperties}
         >
           {state.isCardRevealed ? (
             <span className={styles.cardValue}>{state.myCardValue}</span>
           ) : (
-            <span className={styles.cardHint}>{t('discussing.tap_hint')}</span>
+            <ItoWaves className={styles.cardBackWaves} />
           )}
         </button>
       </div>

@@ -53,12 +53,12 @@
 
 .playAgain {
   background: var(--primary);
-  color: #fff;
+  color: #1a1a1a;
   border: none;
   border-radius: 8px;
   padding: 14px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .leave {

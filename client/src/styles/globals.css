@@ -1,19 +1,34 @@
 :root {
-  --bg: #0a0a0f;
-  --primary: #ff6b35;
-  --secondary: #2d1b4e;
-  --accent: #00d4aa;
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0b0;
-  --card-bg: #1a1a2e;
-  --card-border: #3d3d5c;
+  --bg: #0f0f14;
+  --primary: #F5C818;
+  --secondary: #1e1e2e;
+  --accent: #F5C818;
+  --text-primary: #f0ece0;
+  --text-secondary: #888880;
+  --card-bg: #1a1a28;
+  --card-border: #2e2e3e;
   --danger: #f87171;
   --warning: #fbbf24;
   --success: #4ade80;
 
+  /* ITO number card — cream with dark text, like the physical cards */
+  --ito-card: #f5f0e8;
+  --ito-card-text: #1a1a1a;
+
   --font-display: 'Bebas Neue', cursive;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'Space Mono', monospace;
+}
+
+/* Light mode overrides */
+html.light-mode {
+  --bg: #f0ece0;
+  --secondary: #e4e0d4;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666660;
+  --card-bg: #ffffff;
+  --card-border: #d0ccbc;
+  --ito-card: #ffffff;
 }
 
 *,

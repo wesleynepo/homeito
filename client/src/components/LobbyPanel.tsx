@@ -27,6 +27,8 @@ export function LobbyPanel() {
           <div key={p.id} className={styles.player}>
             <span
               className={`${styles.dot} ${p.isConnected ? styles.online : styles.offline}`}
+              // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-player color theming
+              style={{ '--player-color': p.color } as React.CSSProperties}
             />
             <span>
               {p.nickname}

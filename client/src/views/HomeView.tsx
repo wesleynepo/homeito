@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { LanguageSwitcher } from '../components/LanguageSwitcher'
+import { ThemeToggle } from '../components/ThemeToggle'
+import { ItoWaves } from '../components/ItoWaves'
 import styles from './HomeView.module.css'
 
 export default function HomeView() {
@@ -37,8 +39,12 @@ export default function HomeView() {
 
   return (
     <div className={styles.container}>
+      <ItoWaves className={styles.bgWaves} />
       <h1 className={styles.title}>ITO</h1>
-      <LanguageSwitcher />
+      <div className={styles.controls}>
+        <LanguageSwitcher />
+        <ThemeToggle />
+      </div>
 
       <div className={styles.tabs}>
         <button

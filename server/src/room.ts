@@ -12,6 +12,7 @@ import {
     migrateHost,
     shuffleQuestions,
     QUESTIONS,
+    PLAYER_COLORS,
 } from '@ito/shared'
 
 const rooms = new Map<string, Room>()
@@ -54,6 +55,7 @@ export function createRoom(socketId: string, nickname: string, rounds?: number, 
         id: socketId,
         nickname,
         isHost: true,
+        color: PLAYER_COLORS[0],
         cardValue: null,
         claimedPosition: null,
         isLocked: false,
@@ -106,6 +108,7 @@ export function joinRoom(socketId: string, roomCode: string, nickname: string): 
         id: socketId,
         nickname,
         isHost: false,
+        color: PLAYER_COLORS[room.players.length % PLAYER_COLORS.length],
         cardValue: null,
         claimedPosition: null,
         isLocked: false,

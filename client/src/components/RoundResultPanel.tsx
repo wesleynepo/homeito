@@ -34,7 +34,12 @@ export function RoundResultPanel() {
               const prev = result.orderedPlayers[i - 1]
               const isMistake = prev && prev.cardValue !== null && p.cardValue !== null && prev.cardValue > p.cardValue
               return (
-                <div key={p.id} className={`${styles.card} ${isMistake ? styles.mistake : ''}`}>
+                <div
+                  key={p.id}
+                  className={`${styles.card} ${isMistake ? styles.mistake : ''}`}
+                  // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-player color theming
+                  style={{ '--player-color': p.color } as React.CSSProperties}
+                >
                   <span className={styles.nick}>{p.nickname}</span>
                   <span className={styles.val}>{p.cardValue}</span>
                 </div>

@@ -7,6 +7,7 @@ function makePlayer(overrides: Partial<Player> = {}): Player {
     id: 'p1',
     nickname: 'Alice',
     isHost: false,
+    color: '#F5C818',
     cardValue: null,
     claimedPosition: null,
     isLocked: false,

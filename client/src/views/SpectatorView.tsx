@@ -67,7 +67,12 @@ export default function SpectatorView() {
             </p>
             <div className={styles.players}>
               {room.players.map((p) => (
-                <span key={p.id} className={styles.playerChip}>
+                <span
+                  key={p.id}
+                  className={styles.playerChip}
+                  // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-player color theming
+                  style={{ '--player-color': p.color } as React.CSSProperties}
+                >
                   {p.isHost ? '✦ ' : ''}{p.nickname}{p.isHost ? t('spectator.host_suffix') : ''}
                 </span>
               ))}

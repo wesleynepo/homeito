@@ -1,6 +1,21 @@
 import type { Player } from './types'
 
 /**
+ * ITO-inspired player color palette — one per player slot (max 8 players).
+ * All colors are chosen to read clearly against dark text (#1a1a1a).
+ */
+export const PLAYER_COLORS = [
+  '#F5C818', // yellow
+  '#5BC8DC', // cyan
+  '#74C045', // green
+  '#F07E34', // orange
+  '#E87EA1', // pink
+  '#7BB8E8', // light blue
+  '#B89ED8', // lavender
+  '#F08080', // coral
+]
+
+/**
  * Assigns card values to N players using band partitioning.
  * Divides 1-100 into N equal bands and picks one random value from each.
  * Returns a shuffled array so assignment order doesn't reveal ranking.

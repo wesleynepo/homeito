@@ -43,13 +43,15 @@
 }
 
 .unlocked {
-  opacity: 0.4;
-  border: 2px dashed var(--card-border);
+  opacity: 0.5;
+  border: 2px dashed var(--player-color, var(--card-border));
 }
 
 .locked {
   opacity: 1;
-  border: 2px solid var(--accent);
+  background: var(--player-color, var(--card-bg));
+  border: 2px solid var(--player-color, var(--accent));
+  color: #1a1a1a;
 }
 
 .mistake {
@@ -59,12 +61,14 @@
 
 .nick {
   font-size: 0.7rem;
-  color: var(--text-secondary);
+  color: inherit;
+  opacity: 0.7;
 }
 
 .check {
   font-size: 0.7rem;
-  color: var(--accent);
+  color: inherit;
+  opacity: 0.8;
 }
 
 .value {
@@ -85,6 +89,7 @@
 
 .trayCard {
   background: var(--secondary);
+  border-left: 3px solid var(--player-color, var(--card-border));
   border-radius: 8px;
   padding: 8px 14px;
   text-align: center;
