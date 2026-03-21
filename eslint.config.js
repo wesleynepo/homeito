@@ -20,6 +20,9 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
+      "react/forbid-dom-props": ["error", {
+        "forbid": [{ "propName": "style", "message": "Use CSS modules instead of inline styles. For dynamic values, use CSS custom properties and add an eslint-disable comment explaining why." }]
+      }],
     },
     settings: {
       react: { version: "detect" },

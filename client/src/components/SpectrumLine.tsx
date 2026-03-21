@@ -45,7 +45,8 @@ export function SpectrumLine({ players, revealedUpToIndex, revealedOrder, phase 
               <div
                 key={p.id}
                 className={`${styles.card} ${p.isLocked ? styles.locked : styles.unlocked} ${isMistake ? styles.mistake : ''}`}
-                style={{ left: `${pct}%` }}
+                // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-element positioning
+                style={{ '--card-left': `${pct}%` } as React.CSSProperties}
               >
                 <span className={styles.nick}>{p.nickname}</span>
                 {p.isLocked && !isRevealing && <span className={styles.check}>✓</span>}

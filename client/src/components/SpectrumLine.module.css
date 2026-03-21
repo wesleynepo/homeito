@@ -29,6 +29,7 @@
 .card {
   position: absolute;
   bottom: 8px;
+  left: var(--card-left);
   transform: translateX(-50%);
   background: var(--card-bg);
   border-radius: 10px;

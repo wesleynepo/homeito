@@ -22,7 +22,7 @@ export default function PlayerView() {
   }, [state.connectionStatus, state.room, navigate])
 
   if (!state.room) {
-    return <div style={{ color: '#fff', padding: 24 }}>{t('common.connecting')}</div>
+    return <div className="loading">{t('common.connecting')}</div>
   }
 
   const room = state.room

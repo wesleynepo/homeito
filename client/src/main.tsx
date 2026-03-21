@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <GameProvider>
       <BrowserRouter>
-        <React.Suspense fallback={<div style={{ color: '#fff', padding: 24 }}>Loading...</div>}>
+        <React.Suspense fallback={<div className="loading">Loading...</div>}>
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route path="/player/:roomCode" element={<PlayerView />} />

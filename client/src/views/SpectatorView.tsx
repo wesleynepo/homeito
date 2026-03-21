@@ -45,7 +45,7 @@ export default function SpectatorView() {
   }, [state.lastRevealResult])
 
   if (!state.room) {
-    return <div style={{ color: '#fff', padding: 24 }}>{t('common.connecting_room', { code: roomCode })}</div>
+    return <div className="loading">{t('common.connecting_room', { code: roomCode })}</div>
   }
 
   const room = state.room
