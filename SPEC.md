@@ -1,5 +1,5 @@
 # ITO Game — Web-Based Clone
-## Product Specification v2.6
+## Product Specification v2.8
 
 ---
 
@@ -35,21 +35,22 @@ ITO is a **cooperative number-ordering game**. Each round:
 
 | Layer | Technology |
 |---|---|
-| Frontend | Vanilla JS + HTML/CSS |
-| Backend | Go |
-| WebSockets | `gorilla/websocket` |
-| Styling | Plain CSS (BEM naming convention) |
-| Testing (server) | Go standard `testing` package |
-| Testing (client) | Node + `node:test` (built-in, no framework) |
+| Frontend | React + Vite + TypeScript |
+| Backend | Node.js + TypeScript |
+| Real-time | Socket.io (server + client) |
+| Styling | CSS Modules |
+| QR Code | `qrcode.react` |
+| Testing (server) | Vitest |
+| Testing (client) | Vitest + React Testing Library |
 
-No build step. No bundler. No dependencies on the client side. Go serves the static files (`/static`) alongside the WebSocket endpoint.
+One unified TypeScript monorepo. Shared types (schemas from Section 4) live in a `/shared` package imported by both client and server — no duplication, no drift.
 
 > **Architecture notes:**
-> - All HTML is static files served by Go. No server-side templating required — the JS handles all view switching.
-> - A single `ws.js` module wraps the browser `WebSocket` API, handles JSON serialisation, and implements exponential backoff reconnection.
-> - A single `state.js` module holds client-side game state and exposes a simple `setState(patch)` / `onState(callback)` pub-sub so UI modules can react to server updates without a framework.
-> - CSS Modules are replaced by **BEM class naming** (`block__element--modifier`) to avoid collisions without a build tool.
-> - Two HTML entry points: `spectator.html` and `player.html`. JS determines which view to render based on the URL path.
+> - Socket.io handles rooms, reconnection, and event namespacing out of the box — no manual WebSocket management required.
+> - Shared types in `/shared/types.ts` give full type safety across the client/server boundary.
+> - React Context holds client-side game state, fed by a custom `useSocket` hook that wraps the Socket.io client.
+> - CSS Modules for component-scoped styles, co-located with each component file.
+> - Two React entry points rendered based on route: `/spectator/:roomCode` and `/player/:roomCode`.
 
 ---
 
@@ -281,7 +282,57 @@ If any player disconnects during an active round, the **game pauses** and waits 
 
 ### 11.3 Spectator View (`/spectator/:roomCode`)
 
-Designed for a TV or large screen. Read-only — no interaction.
+Designed for a TV or large screen. Read-only — no interaction. The spectator view has two distinct states depending on whether the game has started.
+
+---
+
+#### Spectator — Lobby State (game not yet started)
+
+This is what the TV shows while players are joining. The primary goal is to get phones pointed at the screen.
+
+```
+┌──────────────────────────────────────────────────────┐
+│                      ITO                             │
+├──────────────────────────────────────────────────────┤
+│                                                      │
+│         ┌───────────────────────┐                    │
+│         │                       │                    │
+│         │   ▄▄▄ ▄  ▄ ▄▄▄▄▄     │                    │
+│         │   █▄█ ██▄█ █   █     │  ← QR code         │
+│         │   █ █ █  █ █▄▄▄█     │                    │
+│         │                       │                    │
+│         └───────────────────────┘                    │
+│                                                      │
+│              192.168.1.42:3000                       │
+│               ROOM CODE: X7K2                        │
+│                                                      │
+├──────────────────────────────────────────────────────┤
+│  Players (4/8)                                       │
+│                                                      │
+│   ✦ Ana (host)    ✦ Bob    ✦ Cia    ✦ Dan            │
+│                                                      │
+│              Waiting for host to start...            │
+└──────────────────────────────────────────────────────┘
+```
+
+**QR code behaviour:**
+- QR encodes the full player join URL: `http://<local-ip>:<port>/player/X7K2`
+- Generated client-side using a lightweight QR library (e.g. `qrcode.react` or `qrcodejs`)
+- Displayed prominently, centred, large enough to scan from across a room (~250×250px minimum)
+- Local IP shown in text below the QR as a fallback for manual entry
+- Room code shown separately in large type for players who type it into a join screen
+
+**Player list behaviour:**
+- Updates in real time as players join — no refresh needed
+- Shows nickname + host badge for the host
+- Player count shown as `(N/8)`
+- Minimum player count indicator: dims/greys out "Waiting for host to start..." until 3 players are present; at 3+ shows it normally
+
+**Transition:** When the host starts the game, the lobby state fades out and the in-game spectrum view fades in.
+
+---
+
+#### Spectator — In-Game State
 
 The primary display is a **horizontal spectrum line**. Player cards live on this line and slide in real time as players update their claimed position. This is the shared board — everyone in the room watches the ordering take shape live.
 
@@ -485,31 +536,34 @@ This game targets **local network (LAN) play** — a single host machine on the 
 **Suggested project structure:**
 ```
 /
-├── main.go
-├── game/
-│   ├── room.go            // Room, Player, GamePhase types + logic
-│   ├── room_test.go       // unit tests for game logic
-│   ├── hub.go             // connection registry, broadcast
-│   ├── hub_test.go        // unit tests for hub
-│   └── handlers.go        // WebSocket upgrade + message dispatch
-└── static/
-    ├── spectator.html
-    ├── player.html
-    ├── css/
-    │   ├── base.css
-    │   ├── spectator.css
-    │   └── player.css
-    └── js/
-        ├── ws.js           // WebSocket wrapper + reconnect
-        ├── state.js        // client state store + pub-sub
-        ├── spectator.js
-        ├── player.js
-        └── test/
-            ├── state.test.js   // pub-sub store tests
-            └── game.test.js    // shared game logic tests (position calc, mistake detection)
+├── package.json              // workspaces: ["client", "server", "shared"]
+├── shared/
+│   ├── types.ts              // Room, Player, GamePhase, Question, RoundResult
+│   └── game.ts               // pure game logic (card assignment, mistake detection)
+├── server/
+│   ├── index.ts              // Express + Socket.io setup
+│   ├── room.ts               // room registry, state mutations
+│   ├── handlers.ts           // socket event handlers
+│   └── __tests__/
+│       ├── room.test.ts      // unit tests for game logic
+│       └── handlers.test.ts  // unit tests for event handlers
+└── client/
+    ├── index.html
+    ├── vite.config.ts
+    └── src/
+        ├── main.tsx
+        ├── context/
+        │   └── GameContext.tsx    // React Context + useSocket hook
+        ├── views/
+        │   ├── SpectatorView.tsx
+        │   └── PlayerView.tsx
+        ├── components/           // shared UI components
+        └── __tests__/
+            ├── game.test.ts      // pure logic from shared/game.ts
+            └── GameContext.test.ts
 ```
 
-**Setup UX goal**: Host runs `go run .`, opens the spectator URL on the TV, shares their local IP with players. Zero config for players — just open a browser and enter the room code. No `npm install`, no build step, no Node required.
+**Setup UX goal**: Host runs `npm install && npm run dev` once. Players open a browser on the same network, enter the room code. Single command, no configuration.
 
 ---
 
@@ -518,70 +572,68 @@ This game targets **local network (LAN) play** — a single host machine on the 
 ### Scope
 Unit tests only for this iteration. No integration or end-to-end tests required now.
 
-### Server — Go (`testing` package)
+Run all tests with `npm test` from the root (Vitest workspace mode covers both `server` and `client`).
 
-Run with `go test ./...` from the project root.
+### Server — Vitest (`server/__tests__/`)
 
-**`game/room_test.go`** — pure game logic, no I/O:
-
-| Test | What it covers |
-|---|---|
-| `TestAssignCards_Noduplicates` | N players all receive unique values in a single round |
-| `TestAssignCards_FullRangeSpread` | Values are distributed across the 1–100 range, not clustered |
-| `TestDetectMistakes_AllCorrect` | Ordered sequence returns 0 mistakes |
-| `TestDetectMistakes_OneSwap` | Single out-of-order adjacent pair returns 1 mistake |
-| `TestDetectMistakes_AllWrong` | Fully reversed sequence returns N-1 mistakes |
-| `TestLivesDecrement` | Lives decrease correctly after a round with mistakes |
-| `TestGameOver_NoLives` | Phase transitions to `gameOver` when lives reach 0 |
-| `TestGameOver_AllRounds` | Phase transitions to `gameOver` after final round completes |
-| `TestHostMigration` | Next player in join order becomes host on host disconnect |
-| `TestRoomConfig_Defaults` | Room created without config uses rounds=13, lives=3 |
-| `TestRoomConfig_Clamp` | Rounds and lives values are clamped to valid ranges |
-
-**`game/hub_test.go`** — hub state management, no WebSocket I/O:
+**`room.test.ts`** — pure game logic, no I/O, imports from `shared/game.ts`:
 
 | Test | What it covers |
 |---|---|
-| `TestRoomCreation_UniqueCode` | Two rooms created back-to-back get different codes |
-| `TestPlayerJoin_MaxPlayers` | 9th player joining an 8-player room is rejected |
-| `TestPlayerJoin_DuplicateNickname` | Duplicate nickname in same room is rejected with `NICKNAME_TAKEN` |
-| `TestPlayerDisconnect_PausesPhase` | Disconnect during `discussing` sets phase to `paused` |
-| `TestPlayerReconnect_RestoresState` | Reconnecting player gets their card value and position back |
+| `assignCards — no duplicates` | N players all receive unique values in a single round |
+| `assignCards — full range spread` | Values distributed across 1–100, not clustered |
+| `detectMistakes — all correct` | Ordered sequence returns 0 mistakes |
+| `detectMistakes — one swap` | Single out-of-order adjacent pair returns 1 mistake |
+| `detectMistakes — all wrong` | Fully reversed sequence returns N-1 mistakes |
+| `livesDecrement — after mistakes` | Lives decrease correctly after a round with mistakes |
+| `gameOver — no lives` | Phase transitions to `gameOver` when lives reach 0 |
+| `gameOver — all rounds complete` | Phase transitions to `gameOver` after final round |
+| `hostMigration — on disconnect` | Next player in join order becomes host |
+| `roomConfig — defaults` | Room created without config uses rounds=13, lives=3 |
+| `roomConfig — clamp` | Rounds and lives values are clamped to valid ranges |
 
-### Client — Node `node:test`
-
-Run with `node --test static/js/test/*.test.js`. No browser required — test files import the JS modules directly via CommonJS/ESM.
-
-> **Note**: `ws.js` and the DOM-dependent parts of `spectator.js` / `player.js` are not unit-tested (they require a live WebSocket and a DOM). Only pure logic modules are tested client-side.
-
-**`state.test.js`** — `state.js` pub-sub store:
-
-| Test | What it covers |
-|---|---|
-| `setState merges patch into existing state` | Partial updates don't wipe unrelated fields |
-| `onState callback fires on setState` | Subscriber receives new state |
-| `multiple subscribers all notified` | Two listeners both called on single setState |
-| `unsubscribe stops callback` | Removed listener not called after unsubscribe |
-
-**`game.test.js`** — any pure logic extracted into a shared `game.js` utility (position percentage calculation, mistake detection mirrored client-side for optimistic UI):
+**`handlers.test.ts`** — room registry logic, no Socket.io I/O:
 
 | Test | What it covers |
 |---|---|
-| `positionToPercent — first of 4` | Returns 0% |
-| `positionToPercent — last of 4` | Returns 100% |
+| `create-room — unique codes` | Two rooms created back-to-back get different codes |
+| `join-room — max players` | 9th player joining an 8-player room returns `ROOM_FULL` error |
+| `join-room — duplicate nickname` | Duplicate nickname returns `NICKNAME_TAKEN` error |
+| `disconnect — pauses phase` | Disconnect during `discussing` sets phase to `paused` |
+| `reconnect — restores state` | Reconnecting player gets their card value and position back |
+
+### Client — Vitest (`client/src/__tests__/`)
+
+> **Note**: Components that depend on a live Socket.io connection or DOM animations are not unit-tested. Only pure logic and context state are covered.
+
+**`game.test.ts`** — pure functions from `shared/game.ts`:
+
+| Test | What it covers |
+|---|---|
+| `positionToPercent — first of N` | Returns 0% |
+| `positionToPercent — last of N` | Returns 100% |
 | `positionToPercent — middle` | Returns correct interpolated percentage |
 | `detectMistakes — correct order` | Returns empty array |
 | `detectMistakes — one swap` | Returns the swapped pair |
+
+**`GameContext.test.ts`** — React Context state transitions (socket events mocked):
+
+| Test | What it covers |
+|---|---|
+| `room-updated — updates context state` | State reflects new room payload |
+| `round-started — stores cardValue` | Player's card value stored in context |
+| `game-paused — sets paused phase` | Phase transitions correctly on pause event |
+| `player-updated — triggers re-render` | Components subscribed to context re-render on player list change |
 
 ---
 
 ## 17. Acceptance Criteria
 
 ### Testing
-- [ ] `go test ./...` passes with no failures
-- [ ] `node --test static/js/test/*.test.js` passes with no failures
-- [ ] All functions under test are pure (no I/O, no WebSocket, no DOM)
-- [ ] Test file exists alongside every Go package that contains game logic
+- [ ] `npm test` passes with no failures across server and client workspaces
+- [ ] All functions under test are pure (no Socket.io I/O, no DOM)
+- [ ] Shared types in `/shared/types.ts` are used by both client and server with no duplication
+- [ ] Socket.io events are mocked in client context tests — no real server required
 
 ### Room Configuration
 - [ ] Host can set round count (5–20) via slider before starting
@@ -615,7 +667,16 @@ Run with `node --test static/js/test/*.test.js`. No browser required — test fi
 - [ ] Lives decrement by the number of mistakes each round
 - [ ] Game ends when lives = 0 (loss) or all rounds complete (win)
 
-### Spectator View
+### Spectator View — Lobby
+- [ ] QR code displayed encoding the full player join URL (`http://<local-ip>:<port>/player/:roomCode`)
+- [ ] QR code is minimum 250×250px and scannable from across a room
+- [ ] Local IP and room code shown in text below QR as manual fallback
+- [ ] Player list updates in real time as players join, showing nickname + host badge
+- [ ] Player count shown as `(N/8)`
+- [ ] "Waiting for host to start" dims until ≥ 3 players are present
+- [ ] Lobby fades out and spectrum view fades in when game starts
+
+### Spectator View — In-Game
 - [ ] Displays a horizontal spectrum line with theme label at each end
 - [ ] Players with no position claimed appear in a waiting tray below the line
 - [ ] Cards slide onto the line and animate to new positions in real time as players update
@@ -677,8 +738,11 @@ All product questions are now resolved. No open items remain.
 | 5 | Spectators see values post-reveal? | ✅ Yes — spectator is the shared board; full reveal shown there |
 | 6 | Disconnection policy? | ✅ Pause and wait; host can kick after 5 min auto-timeout |
 | 7 | Cooperative or competitive? | ✅ Cooperative — team lives, no individual score |
-| 10 | Frontend framework? | ✅ None — Vanilla JS + HTML/CSS, no build step |
+| 8 | Deployment target? | ✅ LAN only — single server, no auth, no HTTPS required |
+| 9 | Server language + transport? | ✅ Node.js + TypeScript + Socket.io |
+| 10 | Frontend framework? | ✅ React + Vite + TypeScript |
+| 11 | Test framework? | ✅ Vitest (server + client), React Testing Library (client) |
 
 ---
 
-*Spec v2.6 — Unit testing added. Go: `testing` package covering game logic and hub state. Client: `node:test` covering `state.js` pub-sub and pure game utilities. No framework dependencies on either side. Test file locations defined in project structure.*
+*Spec v2.8 — Spectator lobby state fully specified: QR code (encodes player join URL), real-time player list, host badge, minimum player indicator. `qrcode.react` added to stack. Spectator AC split into Lobby and In-Game sections.*
