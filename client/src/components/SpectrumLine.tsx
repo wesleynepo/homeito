@@ -2,6 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Player } from '@ito/shared'
 import { positionToPercent } from '@ito/shared'
+import { cssVars } from '../utils/cssVars'
 import styles from './SpectrumLine.module.css'
 
 interface Props {
@@ -45,8 +46,7 @@ export function SpectrumLine({ players, revealedUpToIndex, revealedOrder, phase 
               <div
                 key={p.id}
                 className={`${styles.card} ${p.isLocked ? styles.locked : styles.unlocked} ${isMistake ? styles.mistake : ''}`}
-                // eslint-disable-next-line react/forbid-dom-props -- CSS custom properties required for dynamic per-element positioning and theming
-                style={{ '--card-left': `${pct}%`, '--player-color': p.color } as React.CSSProperties}
+                style={cssVars({ '--card-left': `${pct}%`, '--player-color': p.color })}
               >
                 <span className={styles.nick}>{p.nickname}</span>
                 {p.isLocked && !isRevealing && <span className={styles.check}>✓</span>}
@@ -67,8 +67,7 @@ export function SpectrumLine({ players, revealedUpToIndex, revealedOrder, phase 
             <div
               key={p.id}
               className={styles.trayCard}
-              // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-player color theming
-              style={{ '--player-color': p.color } as React.CSSProperties}
+              style={cssVars({ '--player-color': p.color })}
             >
               <span className={styles.nick}>{p.nickname}</span>
               <span className={styles.value}>?</span>

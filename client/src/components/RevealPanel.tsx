@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
+import { cssVars } from '../utils/cssVars'
 import styles from './RevealPanel.module.css'
 
 export function RevealPanel() {
@@ -25,8 +26,7 @@ export function RevealPanel() {
                 <div
                   key={p.id}
                   className={`${styles.card} ${isMistake ? styles.mistake : ''}`}
-                  // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-player color theming
-                  style={{ '--player-color': p.color } as React.CSSProperties}
+                  style={cssVars({ '--player-color': p.color })}
                 >
                   <span className={styles.nickname}>{p.nickname}</span>
                   <span className={styles.value}>{p.cardValue}</span>

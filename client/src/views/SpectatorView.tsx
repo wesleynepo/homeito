@@ -6,6 +6,7 @@ import { QRCodePanel } from '../components/QRCodePanel'
 import { SpectrumLine } from '../components/SpectrumLine'
 import { LivesDisplay } from '../components/LivesDisplay'
 import { PausedOverlay } from '../components/PausedOverlay'
+import { cssVars } from '../utils/cssVars'
 import styles from './SpectatorView.module.css'
 
 export default function SpectatorView() {
@@ -70,8 +71,7 @@ export default function SpectatorView() {
                 <span
                   key={p.id}
                   className={styles.playerChip}
-                  // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-player color theming
-                  style={{ '--player-color': p.color } as React.CSSProperties}
+                  style={cssVars({ '--player-color': p.color })}
                 >
                   {p.isHost ? '✦ ' : ''}{p.nickname}{p.isHost ? t('spectator.host_suffix') : ''}
                 </span>

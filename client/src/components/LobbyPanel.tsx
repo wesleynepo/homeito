@@ -2,6 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { LivesDisplay } from './LivesDisplay'
+import { cssVars } from '../utils/cssVars'
 import styles from './LobbyPanel.module.css'
 
 export function LobbyPanel() {
@@ -27,8 +28,7 @@ export function LobbyPanel() {
           <div key={p.id} className={styles.player}>
             <span
               className={`${styles.dot} ${p.isConnected ? styles.online : styles.offline}`}
-              // eslint-disable-next-line react/forbid-dom-props -- CSS custom property required for dynamic per-player color theming
-              style={{ '--player-color': p.color } as React.CSSProperties}
+              style={cssVars({ '--player-color': p.color })}
             />
             <span>
               {p.nickname}
