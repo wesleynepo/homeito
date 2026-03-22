@@ -1,0 +1,14 @@
+.btn {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: var(--card-bg);
+}

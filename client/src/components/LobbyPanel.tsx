@@ -1,8 +1,33 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import type { Player } from '@ito/shared'
 import { useGame } from '../context/GameContext'
 import { LivesDisplay } from './LivesDisplay'
+import { useCssVars } from '../hooks/useCssVars'
 import styles from './LobbyPanel.module.css'
+
+interface PlayerRowProps {
+  player: Player
+  isMe: boolean
+}
+
+function PlayerRow({ player, isMe }: PlayerRowProps) {
+  const { t } = useTranslation()
+  const dotRef = useCssVars<HTMLSpanElement>({ '--player-color': player.color })
+  return (
+    <div className={styles.player}>
+      <span
+        ref={dotRef}
+        className={`${styles.dot} ${player.isConnected ? styles.online : styles.offline}`}
+      />
+      <span>
+        {player.nickname}
+        {isMe && t('lobby.you')}
+        {player.isHost && ' 👑'}
+      </span>
+    </div>
+  )
+}
 
 export function LobbyPanel() {
   const { state, myPlayer, isHost, startGame } = useGame()
@@ -24,16 +49,7 @@ export function LobbyPanel() {
           {t('lobby.players', { count: room.players.length })}
         </p>
         {room.players.map((p) => (
-          <div key={p.id} className={styles.player}>
-            <span
-              className={`${styles.dot} ${p.isConnected ? styles.online : styles.offline}`}
-            />
-            <span>
-              {p.nickname}
-              {p.id === myPlayer?.id && t('lobby.you')}
-              {p.isHost && ' 👑'}
-            </span>
-          </div>
+          <PlayerRow key={p.id} player={p} isMe={p.id === myPlayer?.id} />
         ))}
       </div>
 

@@ -16,6 +16,7 @@ export type Player = {
   id: string
   nickname: string
   isHost: boolean
+  color: string
   cardValue: number | null
   claimedPosition: number | null
   isLocked: boolean

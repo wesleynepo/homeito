@@ -1,8 +1,6 @@
 .wrapper {
   display: flex;
   gap: 4px;
-  justify-content: center;
-  margin-bottom: 12px;
 }
 
 .btn {
