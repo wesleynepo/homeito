@@ -1,8 +1,25 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import type { Player } from '@ito/shared'
 import { useGame } from '../context/GameContext'
-import { cssVars } from '../utils/cssVars'
+import { useCssVars } from '../hooks/useCssVars'
 import styles from './RevealPanel.module.css'
+
+interface RevealCardProps {
+  player: Player
+  isMistake: boolean
+}
+
+function RevealCard({ player, isMistake }: RevealCardProps) {
+  const ref = useCssVars<HTMLDivElement>({ '--player-color': player.color })
+  return (
+    <div ref={ref} className={`${styles.card} ${isMistake ? styles.mistake : ''}`}>
+      <span className={styles.nickname}>{player.nickname}</span>
+      <span className={styles.value}>{player.cardValue}</span>
+      {isMistake && <span className={styles.mistakeIcon}>✗</span>}
+    </div>
+  )
+}
 
 export function RevealPanel() {
   const { state } = useGame()
@@ -21,18 +38,8 @@ export function RevealPanel() {
           <div className={styles.cards}>
             {result.orderedPlayers.map((p, i) => {
               const prev = result.orderedPlayers[i - 1]
-              const isMistake = prev && prev.cardValue !== null && p.cardValue !== null && prev.cardValue > p.cardValue
-              return (
-                <div
-                  key={p.id}
-                  className={`${styles.card} ${isMistake ? styles.mistake : ''}`}
-                  style={cssVars({ '--player-color': p.color })}
-                >
-                  <span className={styles.nickname}>{p.nickname}</span>
-                  <span className={styles.value}>{p.cardValue}</span>
-                  {isMistake && <span className={styles.mistakeIcon}>✗</span>}
-                </div>
-              )
+              const isMistake = !!(prev && prev.cardValue !== null && p.cardValue !== null && prev.cardValue > p.cardValue)
+              return <RevealCard key={p.id} player={p} isMistake={isMistake} />
             })}
           </div>
 

@@ -6,8 +6,18 @@ import { QRCodePanel } from '../components/QRCodePanel'
 import { SpectrumLine } from '../components/SpectrumLine'
 import { LivesDisplay } from '../components/LivesDisplay'
 import { PausedOverlay } from '../components/PausedOverlay'
-import { cssVars } from '../utils/cssVars'
+import { useCssVars } from '../hooks/useCssVars'
 import styles from './SpectatorView.module.css'
+
+function PlayerChip({ nickname, color, isHost }: { nickname: string; color: string; isHost: boolean }) {
+  const { t } = useTranslation()
+  const ref = useCssVars<HTMLSpanElement>({ '--player-color': color })
+  return (
+    <span ref={ref} className={styles.playerChip}>
+      {isHost ? '✦ ' : ''}{nickname}{isHost ? t('spectator.host_suffix') : ''}
+    </span>
+  )
+}
 
 export default function SpectatorView() {
   const { roomCode } = useParams<{ roomCode: string }>()
@@ -68,13 +78,7 @@ export default function SpectatorView() {
             </p>
             <div className={styles.players}>
               {room.players.map((p) => (
-                <span
-                  key={p.id}
-                  className={styles.playerChip}
-                  style={cssVars({ '--player-color': p.color })}
-                >
-                  {p.isHost ? '✦ ' : ''}{p.nickname}{p.isHost ? t('spectator.host_suffix') : ''}
-                </span>
+                <PlayerChip key={p.id} nickname={p.nickname} color={p.color} isHost={p.isHost} />
               ))}
             </div>
             <p className={`${styles.waitingText} ${room.players.length >= 3 ? styles.ready : styles.dim}`}>

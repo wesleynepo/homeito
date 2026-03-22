@@ -1,9 +1,25 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import type { Player } from '@ito/shared'
 import { useGame } from '../context/GameContext'
 import { LivesDisplay } from './LivesDisplay'
-import { cssVars } from '../utils/cssVars'
+import { useCssVars } from '../hooks/useCssVars'
 import styles from './RoundResultPanel.module.css'
+
+interface ResultCardProps {
+  player: Player
+  isMistake: boolean
+}
+
+function ResultCard({ player, isMistake }: ResultCardProps) {
+  const ref = useCssVars<HTMLDivElement>({ '--player-color': player.color })
+  return (
+    <div ref={ref} className={`${styles.card} ${isMistake ? styles.mistake : ''}`}>
+      <span className={styles.nick}>{player.nickname}</span>
+      <span className={styles.val}>{player.cardValue}</span>
+    </div>
+  )
+}
 
 export function RoundResultPanel() {
   const { state, isHost, nextRound } = useGame()
@@ -33,17 +49,8 @@ export function RoundResultPanel() {
           <div className={styles.cards}>
             {result.orderedPlayers.map((p, i) => {
               const prev = result.orderedPlayers[i - 1]
-              const isMistake = prev && prev.cardValue !== null && p.cardValue !== null && prev.cardValue > p.cardValue
-              return (
-                <div
-                  key={p.id}
-                  className={`${styles.card} ${isMistake ? styles.mistake : ''}`}
-                  style={cssVars({ '--player-color': p.color })}
-                >
-                  <span className={styles.nick}>{p.nickname}</span>
-                  <span className={styles.val}>{p.cardValue}</span>
-                </div>
-              )
+              const isMistake = !!(prev && prev.cardValue !== null && p.cardValue !== null && prev.cardValue > p.cardValue)
+              return <ResultCard key={p.id} player={p} isMistake={isMistake} />
             })}
           </div>
         </div>

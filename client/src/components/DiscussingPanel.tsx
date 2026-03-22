@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { LivesDisplay } from './LivesDisplay'
 import { ItoWaves } from './ItoWaves'
-import { cssVars } from '../utils/cssVars'
+import { useCssVars } from '../hooks/useCssVars'
 import styles from './DiscussingPanel.module.css'
 
 export function DiscussingPanel() {
   const { state, myPlayer, isHost, setPosition, lockPosition, unlockPosition, forceReveal, toggleCard } = useGame()
+  const cardRef = useCssVars<HTMLButtonElement>({ '--player-color': myPlayer?.color })
   const { t } = useTranslation()
   const room = state.room!
   const question = room.currentQuestion!
@@ -47,10 +48,10 @@ export function DiscussingPanel() {
       <div className={styles.cardSection}>
         <p className={styles.sectionLabel}>{t('discussing.your_card')}</p>
         <button
+          ref={cardRef}
           className={`${styles.card} ${state.isCardRevealed ? styles.revealed : ''}`}
           onClick={toggleCard}
           aria-label={state.isCardRevealed ? t('discussing.hide_card') : t('discussing.tap_to_reveal')}
-          style={cssVars({ '--player-color': myPlayer?.color })}
         >
           {state.isCardRevealed ? (
             <span className={styles.cardValue}>{state.myCardValue}</span>

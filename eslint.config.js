@@ -20,9 +20,8 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
-      "no-restricted-syntax": ["error", {
-        "selector": "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
-        "message": "Avoid inline style objects. Use CSS modules for static styles, or cssVars() for CSS custom properties."
+      "react/forbid-dom-props": ["error", {
+        "forbid": [{ "propName": "style", "message": "Use CSS modules instead of inline styles. For dynamic values, use CSS custom properties via useCssVars() hook." }]
       }],
     },
     settings: {
