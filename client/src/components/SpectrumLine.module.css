@@ -1,7 +1,8 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 32px;
+  flex: 1;
 }
 
 .lineContainer {
@@ -21,7 +22,7 @@
 
 .line {
   flex: 1;
-  height: 100px;
+  height: clamp(160px, 30vh, 380px);
   position: relative;
   border-bottom: 2px solid var(--card-border);
 }
@@ -75,6 +76,26 @@
   font-family: var(--font-mono);
   font-size: 1.1rem;
   font-weight: 700;
+}
+
+.ghost {
+  position: absolute;
+  bottom: 8px;
+  left: var(--card-left);
+  transform: translateX(-50%);
+  border: 2px dashed var(--card-border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-width: 56px;
+  text-align: center;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.ghostPos {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
 }
 
 .tray {

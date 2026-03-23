@@ -70,20 +70,24 @@ export default function SpectatorView() {
     <div className={styles.container}>
       {isLobby ? (
         <div className={styles.lobby}>
-          <h1 className={styles.title}>ITO</h1>
-          <QRCodePanel roomCode={room.code} />
-          <div className={styles.playerList}>
-            <p className={styles.playerCount}>
-              {t('spectator.players', { count: room.players.length })}
-            </p>
-            <div className={styles.players}>
-              {room.players.map((p) => (
-                <PlayerChip key={p.id} nickname={p.nickname} color={p.color} isHost={p.isHost} />
-              ))}
+          <div className={styles.lobbyLeft}>
+            <h1 className={styles.title}>ITO</h1>
+            <QRCodePanel roomCode={room.code} />
+          </div>
+          <div className={styles.lobbyRight}>
+            <div className={styles.playerList}>
+              <p className={styles.playerCount}>
+                {t('spectator.players', { count: room.players.length })}
+              </p>
+              <div className={styles.players}>
+                {room.players.map((p) => (
+                  <PlayerChip key={p.id} nickname={p.nickname} color={p.color} isHost={p.isHost} />
+                ))}
+              </div>
+              <p className={`${styles.waitingText} ${room.players.length >= 3 ? styles.ready : styles.dim}`}>
+                {t('spectator.waiting')}
+              </p>
             </div>
-            <p className={`${styles.waitingText} ${room.players.length >= 3 ? styles.ready : styles.dim}`}>
-              {t('spectator.waiting')}
-            </p>
           </div>
         </div>
       ) : (
@@ -101,12 +105,14 @@ export default function SpectatorView() {
             </div>
           )}
 
-          <SpectrumLine
-            players={room.players}
-            revealedUpToIndex={revealedUpToIndex}
-            revealedOrder={revealedOrder}
-            phase={room.phase}
-          />
+          <div className={styles.spectrumArea}>
+            <SpectrumLine
+              players={room.players}
+              revealedUpToIndex={revealedUpToIndex}
+              revealedOrder={revealedOrder}
+              phase={room.phase}
+            />
+          </div>
 
           {isRevealing && state.lastRevealResult && (
             <div className={styles.revealSummary}>
