@@ -1,7 +1,8 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 32px;
+  flex: 1;
 }
 
 .lineContainer {
@@ -19,27 +20,44 @@
   flex-shrink: 0;
 }
 
-.line {
+.lineWrapper {
   flex: 1;
-  height: 100px;
-  position: relative;
   border-bottom: 2px solid var(--card-border);
 }
 
+.cardRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: clamp(160px, 30vh, 380px);
+  padding-bottom: 8px;
+}
+
 .card {
-  position: absolute;
-  bottom: 8px;
-  left: var(--card-left);
-  transform: translateX(-50%);
   background: var(--card-bg);
-  border-radius: 10px;
-  padding: 8px 12px;
+  border-radius: 14px;
+  padding: 20px 14px;
   text-align: center;
-  min-width: 64px;
-  transition: left 250ms ease-out;
+  width: 100px;
+  min-height: 148px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.stack {
+  position: relative;
+  width: 100px;
+  min-height: calc(148px + (var(--stack-count) - 1) * 22px);
+}
+
+.stack > .card {
+  position: absolute;
+  top: calc(var(--stack-index) * 22px);
+  z-index: calc(10 - var(--stack-index));
 }
 
 .unlocked {
@@ -60,21 +78,39 @@
 }
 
 .nick {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: inherit;
   opacity: 0.7;
 }
 
 .check {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: inherit;
   opacity: 0.8;
 }
 
 .value {
   font-family: var(--font-mono);
-  font-size: 1.1rem;
+  font-size: 1.6rem;
   font-weight: 700;
+}
+
+.ghost {
+  border: 2px dashed var(--card-border);
+  border-radius: 14px;
+  width: 100px;
+  min-height: 148px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.25;
+}
+
+.ghostPos {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 .tray {
