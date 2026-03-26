@@ -13,13 +13,15 @@
     "test": "vitest run --workspace vitest.workspace.ts",
     "test:coverage": "vitest run --workspace vitest.workspace.ts --coverage",
     "lint": "eslint . --max-warnings=0",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:e2e": "playwright test"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": "eslint --max-warnings=0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.58.2",
     "@vitest/coverage-v8": "^1.6.1",
     "concurrently": "^8.2.2",
     "eslint": "^10.1.0",
