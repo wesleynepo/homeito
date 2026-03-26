@@ -11,8 +11,8 @@ export function QRCodePanel({ roomCode }: Props) {
   const localIp = useLocalIp()
   const port = window.location.port || '3000'
   const joinUrl = localIp
-    ? `http://${localIp}:${port}/player/${roomCode}`
-    : `${window.location.origin}/player/${roomCode}`
+    ? `http://${localIp}:${port}/?code=${roomCode}`
+    : `${window.location.origin}/?code=${roomCode}`
 
   return (
     <div className={styles.container}>
