@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useGame } from '../context/GameContext'
 import { LanguageSwitcher } from '../components/LanguageSwitcher'
@@ -11,12 +11,27 @@ export default function HomeView() {
   const { createRoom, joinRoom, state } = useGame()
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const nicknameRef = useRef<HTMLInputElement>(null)
 
-  const [mode, setMode] = useState<'create' | 'join' | 'watch'>('create')
+  // Derive initial state from ?code= query param (e.g. from QR code scan)
+  const codeFromUrl = (() => {
+    const code = searchParams.get('code')?.toUpperCase()
+    return code && /^[A-Z0-9]{4}$/.test(code) ? code : ''
+  })()
+
+  const [mode, setMode] = useState<'create' | 'join' | 'watch'>(codeFromUrl ? 'join' : 'create')
   const [nickname, setNickname] = useState('')
-  const [roomCode, setRoomCode] = useState('')
+  const [roomCode, setRoomCode] = useState(codeFromUrl)
   const [rounds, setRounds] = useState(13)
   const [lives, setLives] = useState(3)
+
+  // When a room code is pre-filled from the URL, focus the nickname input
+  useEffect(() => {
+    if (codeFromUrl) {
+      nicknameRef.current?.focus()
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Navigate to player view once we have a room
   useEffect(() => {
@@ -125,13 +140,14 @@ export default function HomeView() {
               onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
               maxLength={4}
               placeholder="XXXX"
-              autoFocus
+              autoFocus={roomCode.length === 0}
             />
           </label>
 
           <label className={styles.label}>
             {t('home.nickname_label')}
             <input
+              ref={nicknameRef}
               className={styles.input}
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
